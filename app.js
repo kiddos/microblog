@@ -19,6 +19,7 @@ app.configure(function(){
   }));
   app.use(express.router(routes));
   app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/node_modules/material-design-icons-iconfont/dist/'));
 });
 
 app.configure('development', function(){
