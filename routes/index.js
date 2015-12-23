@@ -14,32 +14,32 @@ module.exports = function(app) {
       });
     });
   });
-  
+
   app.get('/reg', checkNotLogin);
   app.get('/reg', function(req, res) {
     res.render('reg', {
       title: '用戶註冊',
     });
   });
-  
+
   app.post('/reg', checkNotLogin);
   app.post('/reg', function(req, res) {
     //檢驗用戶兩次輸入的口令是否一致
-    if (req.body['password-repeat'] != req.body['password']) {
+    if (req.body['password-repeat'] != req.body.password) {
       req.flash('error', '兩次輸入的口令不一致');
       return res.redirect('/reg');
     }
-  
+
     //生成口令的散列值
     var md5 = crypto.createHash('md5');
     var password = md5.update(req.body.password).digest('base64');
-    
+
     var newUser = new User({
       name: req.body.username,
       password: password,
     });
-    
-    //檢查用戶名是否已經存在
+
+    // check if user exists
     User.get(newUser.name, function(err, user) {
       if (user)
         err = 'Username already exists.';
@@ -47,32 +47,41 @@ module.exports = function(app) {
         req.flash('error', err);
         return res.redirect('/reg');
       }
-      //如果不存在則新增用戶
-      newUser.save(function(err) {
-        if (err) {
-          req.flash('error', err);
-          return res.redirect('/reg');
-        }
-        req.session.user = newUser;
-        req.flash('success', '註冊成功');
-        res.redirect('/');
-      });
+
+      // if the user does not exists yet and user name is valid
+      if (newUser.name !== null &&
+          newUser.name.length > 0 &&
+          newUser.name.trim().length !== 0) {
+        newUser.save(function(err) {
+          if (err) {
+            req.flash('error', err);
+            return res.redirect('/reg');
+          }
+          req.session.user = newUser;
+          req.flash('success', '註冊成功');
+          res.redirect('/');
+        });
+      } else {
+        console.log('invalid user name');
+        req.flash('error', 'Invalid User name');
+        return res.redirect('/reg');
+      }
     });
   });
-  
+
   app.get('/login', checkNotLogin);
   app.get('/login', function(req, res) {
     res.render('login', {
       title: '用戶登入',
     });
   });
-  
+
   app.post('/login', checkNotLogin);
   app.post('/login', function(req, res) {
     //生成口令的散列值
     var md5 = crypto.createHash('md5');
     var password = md5.update(req.body.password).digest('base64');
-    
+
     User.get(req.body.username, function(err, user) {
       if (!user) {
         req.flash('error', '用戶不存在');
@@ -87,14 +96,14 @@ module.exports = function(app) {
       res.redirect('/');
     });
   });
-  
+
   app.get('/logout', checkLogin);
   app.get('/logout', function(req, res) {
     req.session.user = null;
     req.flash('success', '登出成功');
     res.redirect('/');
   });
-  
+
   app.get('/u/:user', function(req, res) {
     User.get(req.params.user, function(err, user) {
       if (!user) {
@@ -113,7 +122,7 @@ module.exports = function(app) {
       });
     });
   });
-  
+
   app.post('/post', checkLogin);
   app.post('/post', function(req, res) {
     var currentUser = req.session.user;

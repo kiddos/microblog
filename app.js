@@ -1,17 +1,10 @@
-/**
- * Module dependencies.
- */
-
 var express = require('express');
 var routes = require('./routes');
 var settings = require('./settings');
-// var MongoStore = require('connect-mongo');
 var MongoStore = require('connect-mongo')(express);
-
 var app = module.exports = express.createServer();
 
-// Configuration
-
+app.use(express.favicon(__dirname + '/public/favicon.ico'));
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
@@ -21,11 +14,13 @@ app.configure(function(){
   app.use(express.session({
     secret: settings.cookieSecret,
     store: new MongoStore({
+      url: settings.url,
       db: settings.db
     })
   }));
   app.use(express.router(routes));
   app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/node_modules/material-design-icons-iconfont/dist/'));
 });
 
 app.configure('development', function(){
@@ -56,5 +51,7 @@ app.dynamicHelpers({
   },
 });
 
-app.listen(3000);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+app.listen(settings.debugPort);
+console.log("Express server listening on port %d in %s mode",
+            app.address().port, app.settings.env);
+

@@ -1,11 +1,17 @@
 {
-    "name": "microblog"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.8"
-    , "ejs": ">= 0.0.1"
-    , "connect-mongo": ">= 0.1.7"
-    , "mongodb": ">= 0.9.9"
+  "name": "microblog",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "2.5.8",
+    "ejs": ">= 0.0.1",
+    "connect-mongo": ">= 0.1.7",
+    "mongodb": ">= 0.9.9",
+    "socket.io": "~1.3.x",
+    "jquery": "~2.1.x",
+    "material-design-icons-iconfont": "~2.0.x"
   }
 }
