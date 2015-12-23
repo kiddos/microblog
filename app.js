@@ -21,6 +21,7 @@ app.configure(function(){
   app.use(express.session({
     secret: settings.cookieSecret,
     store: new MongoStore({
+      url: settings.url,
       db: settings.db
     })
   }));
@@ -56,5 +57,5 @@ app.dynamicHelpers({
   },
 });
 
-app.listen(3000);
+app.listen(settings.debugPort);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
