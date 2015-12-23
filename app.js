@@ -4,6 +4,7 @@ var settings = require('./settings');
 var MongoStore = require('connect-mongo')(express);
 var app = module.exports = express.createServer();
 
+app.use(express.favicon(__dirname + '/public/favicon.ico'));
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
