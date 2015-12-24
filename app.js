@@ -3,6 +3,12 @@ var routes = require('./routes');
 var settings = require('./settings');
 var MongoStore = require('connect-mongo')(express);
 var app = module.exports = express.createServer();
+var io = require('socket.io')(app);
+
+io.on('connection', function(socket) {
+  console.log('connection establish');
+  console.log('socket: ' + socket.request.connection.remoteAddress);
+});
 
 app.use(express.favicon(__dirname + '/public/favicon.ico'));
 app.configure(function(){
@@ -21,6 +27,7 @@ app.configure(function(){
   app.use(express.router(routes));
   app.use(express.static(__dirname + '/public'));
   app.use(express.static(__dirname + '/node_modules/material-design-icons-iconfont/dist/'));
+  app.use(express.static(__dirname + '/node_modules/socket.io-client/'));
 });
 
 app.configure('development', function(){
