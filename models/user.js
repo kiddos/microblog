@@ -3,7 +3,7 @@ var mongodb = require('./db');
 function User(user) {
   this.name = user.name;
   this.password = user.password;
-};
+}
 module.exports = User;
 
 User.prototype.save = function save(callback) {
@@ -53,6 +53,37 @@ User.get = function get(username, callback) {
           callback(err, user);
         } else {
           callback(err, null);
+        }
+      });
+    });
+  });
+};
+
+User.getAll = function getAll(callback, users) {
+  mongodb.open(function(err, db) {
+    if (err) {
+      return callback(err);
+    }
+
+    db.collection('users', function(err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+
+      var users = [];
+      var cursor = collection.find();
+      cursor.each(function(err, doc) {
+        if (err) {
+          mongodb.close();
+          return callback(err);
+        } else {
+          if (doc === null) {
+            mongodb.close();
+            return callback(err, users);
+          }
+          var user = new User(doc);
+          users.push(user);
         }
       });
     });

@@ -8,9 +8,16 @@ module.exports = function(app) {
       if (err) {
         posts = [];
       }
-      res.render('index', {
-        title: '首頁',
-        posts: posts,
+      User.getAll(function(err, users) {
+        if (err) {
+          users = [];
+        }
+
+        res.render('index', {
+          title: '首頁',
+          posts: posts,
+          users: users
+        });
       });
     });
   });
