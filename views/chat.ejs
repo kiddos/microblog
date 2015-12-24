@@ -1,6 +1,16 @@
 <div class="span12" style="margin-top: 100px;margin-bottom: 50px">
-  <textarea rows="20" class="span7"></textarea>
-  <ul class="span3">
-    <li>User</li>
-  </ul>
+  <div class="chat-box span7">
+    <textarea rows="20" class="span7" autocomplete="off"></textarea>
+    <textarea rows="2" class="span7" autocomplete="off"></textarea>
+  </div>
+
+  <div class="active-user-list span3">
+  <% if(user) { %>
+    <ul class="list">
+    <% users.forEach(function(user, index) { %>
+      <li><%= user.name %></li>
+    <% }) %>
+    </ul>
+  <% } %>
+  </div>
 </div>
