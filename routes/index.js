@@ -1,6 +1,7 @@
 var crypto = require('crypto');
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
+var fs = require('fs');
 
 module.exports = function(app) {
   app.get('/', function(req, res) {
@@ -18,6 +19,55 @@ module.exports = function(app) {
           posts: posts,
           users: users
         });
+      });
+    });
+  });
+
+  app.get('/profile', function(req, res) {
+    res.render('profile', {
+      title: 'profile',
+    });
+  });
+
+  app.post('/profile-upload', function(req, res) {
+    var name = req.session.user.name;
+    console.log('user name: ' + req.session.user.name);
+    console.log('saving profile...');
+    var profile = req.body.profile;
+    User.get(name, function(err, user) {
+      if (user) {
+        console.log('user located.');
+        user.saveProfile(profile, function(err, newUser) {
+          // update new user session
+          req.session.user = newUser;
+          res.redirect('/profile');
+        });
+      } else {
+        res.redirect('/');
+      }
+    });
+  });
+
+  app.post('/image-upload', function(req, res) {
+    var name = req.session.user.name;
+    var imagePath = req.files.image.path;
+    fs.readFile(imagePath, function(err, imageData) {
+      User.get(name, function(err, user) {
+        if (user) {
+          console.log('user located');
+          user.saveImage(imageData, function(err, newUser) {
+            if (err) {
+              console.log('fail to save image');
+              return res.redirect('/profile');
+            }
+            console.log('redirect');
+            // update new user session
+            req.session.user = newUser;
+            return res.redirect('/profile');
+          });
+        } else {
+          return res.redirect('/profile');
+        }
       });
     });
   });

@@ -19,18 +19,21 @@ socket.on('disconnect', function(){
   console.log('disconnected');
 });
 
-type.oninput = function() {
-  var content = type.value;
-  var userName = user.innerHTML;
+if (type !== null) {
+  type.oninput = function() {
+    var content = type.value;
+    var userName = user.innerHTML;
 
-  if (content[content.length-1] === '\n') {
-    socket.emit('say', {content: content, user: userName});
-    // clear input window
-    type.value = '';
-    // append message to chat window
-    $('#chat').val($('#chat').val() + 'You: ' + content);
+    if (content[content.length-1] === '\n') {
+      socket.emit('say', {content: content, user: userName});
+      // clear input window
+      type.value = '';
+      // append message to chat window
+      $('#chat').val($('#chat').val() + 'You: ' + content);
 
-    console.log(user.innerHTML);
-    console.log('sending data');
-  }
-};
+      console.log(user.innerHTML);
+      console.log('sending data');
+    }
+  };
+}
+
