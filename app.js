@@ -17,11 +17,14 @@ io.on('connection', function(socket) {
 });
 
 app.use(express.favicon(__dirname + '/public/favicon.ico'));
-app.configure(function(){
+app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
-  app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.bodyParser({
+    keepExtensions: true,
+    uploadDir: __dirname + '/upload'
+  }));
   app.use(express.cookieParser());
   app.use(express.session({
     secret: settings.cookieSecret,
