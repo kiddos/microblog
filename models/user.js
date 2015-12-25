@@ -1,8 +1,15 @@
 var mongodb = require('./db');
+var settings = require('../settings');
 
 function User(user) {
   this.name = user.name;
   this.password = user.password;
+  if (user.image === null || user.image === undefined) {
+    this.image = settings.defaultImage;
+  } else {
+    this.image = user.image;
+  }
+  console.log(this.image);
 }
 module.exports = User;
 
@@ -11,6 +18,7 @@ User.prototype.save = function save(callback) {
   var user = {
     name: this.name,
     password: this.password,
+    image: user.image,
   };
   mongodb.open(function(err, db) {
     if (err) {
