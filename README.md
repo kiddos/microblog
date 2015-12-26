@@ -6,6 +6,7 @@ The basic setup is unchaged.
 * check for invalid user name
 
 ### additional features:
-- [ ] chatroom
+- [x] chatroom
 - [ ] upload image for individual users
 - [ ] redesign the web page
+- [ ] search/filter for post

@@ -3,13 +3,28 @@ var routes = require('./routes');
 var settings = require('./settings');
 var MongoStore = require('connect-mongo')(express);
 var app = module.exports = express.createServer();
+var io = require('socket.io')(app);
+
+io.on('connection', function(socket) {
+  console.log('connection establish');
+  console.log('socket: ' + socket.request.connection.remoteAddress);
+
+  socket.on('say', function(data) {
+    console.log(data.user);
+    console.log(data.content);
+    socket.emit('someone-say', data);
+  });
+});
 
 app.use(express.favicon(__dirname + '/public/favicon.ico'));
-app.configure(function(){
+app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
-  app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.bodyParser({
+    keepExtensions: true,
+    uploadDir: __dirname + '/upload'
+  }));
   app.use(express.cookieParser());
   app.use(express.session({
     secret: settings.cookieSecret,
@@ -21,6 +36,10 @@ app.configure(function(){
   app.use(express.router(routes));
   app.use(express.static(__dirname + '/public'));
   app.use(express.static(__dirname + '/node_modules/material-design-icons-iconfont/dist/'));
+  app.use(express.static(__dirname + '/node_modules/socket.io-client/'));
+  app.use(express.static(__dirname + '/node_modules/jquery/dist'));
+  app.use(express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+  app.use(express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 });
 
 app.configure('development', function(){

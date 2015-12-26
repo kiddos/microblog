@@ -1,8 +1,20 @@
 var mongodb = require('./db');
+var settings = require('../settings');
+var fs = require('fs');
 
 function User(user) {
   this.name = user.name;
   this.password = user.password;
+  if (user.image === null || user.image === undefined) {
+    this.image = settings.defaultImage;
+  } else {
+    this.image = user.image;
+  }
+  if (user.profile === null || user.profile === undefined) {
+    this.profile = '';
+  } else {
+    this.profile = user.profile;
+  }
 }
 module.exports = User;
 
@@ -11,6 +23,7 @@ User.prototype.save = function save(callback) {
   var user = {
     name: this.name,
     password: this.password,
+    image: this.image,
   };
   mongodb.open(function(err, db) {
     if (err) {
@@ -87,5 +100,64 @@ User.getAll = function getAll(callback, users) {
         }
       });
     });
+  });
+};
+
+User.prototype.saveProfile = function(newProfile, callback) {
+  // new user with profile
+  var user = {
+    name: this.name,
+    password: this.password,
+    image: this.image,
+    profile: newProfile
+  };
+  mongodb.open(function(err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('users', function(err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      collection.update({name: user.name}, user, function(err, results) {
+        mongodb.close();
+        return callback(err, user);
+      });
+    });
+  });
+};
+
+User.prototype.saveImage = function(newImage, callback) {
+  var user = {
+    name: this.name,
+    password: this.password,
+    image: '/img/users/' + this.name + '.jpg',
+    profile: this.profile,
+  };
+  // open mongodb and update the user
+  mongodb.open(function(err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('users', function(err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      collection.update({name: user.name}, user, function(err, results) {
+        mongodb.close();
+      });
+    });
+  });
+  // save the image data
+  var imagePath = __dirname + "/../public/img/users/" + this.name + '.jpg';
+  fs.writeFile(imagePath, newImage, 'binary', function(err) {
+    if (err) {
+      console.log(err);
+      return callback(err);
+    }
+    console.log('new image saved for ' + this.name);
+    return callback(err, user);
   });
 };

@@ -1,3 +1,13 @@
+# ignore node modules
 node_modules
+
+# ignore editor temp files
 ._*
 *.swp
+
+# ignore npm-debug
+npm-debug.log
+
+# ignore images
+upload/*
+public/img/users/*
