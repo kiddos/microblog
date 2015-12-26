@@ -30,7 +30,7 @@ User.prototype.save = function save(callback) {
       return callback(err);
     }
     // 讀取 users 集合
-    db.collection('users', function(err, collection) {
+    db.collection(settings.usersCollection, function(err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
@@ -52,7 +52,7 @@ User.get = function get(username, callback) {
       return callback(err);
     }
     // 讀取 users 集合
-    db.collection('users', function(err, collection) {
+    db.collection(settings.usersCollection, function(err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
@@ -78,7 +78,7 @@ User.getAll = function getAll(callback, users) {
       return callback(err);
     }
 
-    db.collection('users', function(err, collection) {
+    db.collection(settings.usersCollection, function(err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
@@ -115,7 +115,7 @@ User.prototype.saveProfile = function(newProfile, callback) {
     if (err) {
       return callback(err);
     }
-    db.collection('users', function(err, collection) {
+    db.collection(settings.usersCollection, function(err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
@@ -140,7 +140,7 @@ User.prototype.saveImage = function(newImage, callback) {
     if (err) {
       return callback(err);
     }
-    db.collection('users', function(err, collection) {
+    db.collection(settings.usersCollection, function(err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
