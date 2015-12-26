@@ -7,7 +7,3 @@ node_modules
 
 # ignore npm-debug
 npm-debug.log
-
-# ignore images
-upload/*
-public/img/users/*
