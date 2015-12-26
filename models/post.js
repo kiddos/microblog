@@ -1,4 +1,5 @@
 var mongodb = require('./db');
+var settings = require('../settings');
 
 function Post(username, post, time) {
   this.user = username;
@@ -8,7 +9,7 @@ function Post(username, post, time) {
   } else {
     this.time = new Date();
   }
-};
+}
 module.exports = Post;
 
 Post.prototype.save = function save(callback) {
@@ -23,7 +24,7 @@ Post.prototype.save = function save(callback) {
       return callback(err);
     }
     // 讀取 posts 集合
-    db.collection('posts', function(err, collection) {
+    db.collection(settings.postsCollection, function(err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
@@ -45,7 +46,7 @@ Post.get = function get(username, callback) {
       return callback(err);
     }
     // 讀取 posts 集合
-    db.collection('posts', function(err, collection) {
+    db.collection(settings.postsCollection, function(err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
