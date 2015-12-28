@@ -72,6 +72,7 @@ module.exports = function(app) {
     });
   });
 
+
   app.get('/reg', checkNotLogin);
   app.get('/reg', function(req, res) {
     res.render('reg', {
@@ -183,17 +184,38 @@ module.exports = function(app) {
   app.post('/post', checkLogin);
   app.post('/post', function(req, res) {
     var currentUser = req.session.user;
-    var post = new Post(currentUser.name, req.body.post);
-    post.save(function(err) {
-      if (err) {
-        req.flash('error', err);
-        return res.redirect('/');
-      }
-      req.flash('success', '發表成功');
-      res.redirect('/u/' + currentUser.name);
-    });
+    var post = new Post(currentUser.name, req.body.post, null, null);
+
+    var image = req.files.image.path;
+    // need to check like this
+    if (image !== null &&
+        (image.endsWith('.png') || image.endsWith('.jpg') ||
+         image.endsWith('.gif'))) {
+      // if the user upload an image then save it
+      console.log('image uploaded: ' + image);
+      post.saveImage(image, function(err) {
+        if (err) {
+          req.flash('error', err);
+          return res.redirect('/');
+        }
+        req.flash('success', '發表成功');
+        res.redirect('/u/' + currentUser.name);
+      });
+    } else {
+      console.log('no image uploaded');
+      // if the user did not upload an image
+      post.save(function(err) {
+        if (err) {
+          req.flash('error', err);
+          return res.redirect('/');
+        }
+        req.flash('success', '發表成功');
+        res.redirect('/u/' + currentUser.name);
+      });
+    }
   });
 };
+
 
 function checkLogin(req, res, next) {
   if (!req.session.user) {
