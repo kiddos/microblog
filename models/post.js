@@ -1,7 +1,8 @@
 var mongodb = require('./db');
 var settings = require('../settings');
+var fs = require('fs');
 
-function Post(username, post, time) {
+function Post(username, post, image, time) {
   this.user = username;
   this.post = post;
   if (time) {
@@ -9,22 +10,21 @@ function Post(username, post, time) {
   } else {
     this.time = new Date();
   }
-  if (post.image) {
-    this.image = post.image;
+  if (image) {
+    this.image = image;
+  } else {
+    this.image = null;
   }
 }
 module.exports = Post;
 
-Post.prototype.save = function save(newImage,callback) {
+Post.prototype.save = function save(callback) {
   // 存入 Mongodb 的文檔
   var post = {
     user: this.user,
     post: this.post,
     time: this.time,
-    image: this.image,
   };
-  if(newImage === null)
-    post.image = null;
   mongodb.open(function(err, db) {
     if (err) {
       return callback(err);
@@ -40,22 +40,10 @@ Post.prototype.save = function save(newImage,callback) {
       // 寫入 post 文檔
       collection.insert(post, {safe: true}, function(err, post) {
         mongodb.close();
-        callback(err, post);
+        callback(err);
       });
     });
   });
-  if(newImage === null){
-    // save the image data
-    var imagePath = __dirname + "/../public/img/posts/" + this.user + this.time + '.jpg';
-    fs.writeFile(imagePath, newImage, 'binary', function(err) {
-      if (err) {
-        console.log(err);
-        return callback(err);
-      }
-      console.log('new image saved for ' + this.user + this.time);
-      return callback(err, user);
-    });
-  }
 };
 
 Post.get = function get(username, callback) {
@@ -82,7 +70,7 @@ Post.get = function get(username, callback) {
         // 封裝 posts 爲 Post 對象
         var posts = [];
         docs.forEach(function(doc, index) {
-          var post = new Post(doc.user, doc.post, doc.time, doc.image);
+          var post = new Post(doc.user, doc.post, doc.image, doc.time);
           posts.push(post);
         });
         callback(null, posts);
@@ -96,9 +84,10 @@ Post.prototype.saveImage = function(newImage, callback) {
     user: this.user,
     post: this.post,
     time: this.time,
-    image: '/img/posts/' + this.user + this.time + '.jpg',
+    image: null,
   };
-  // open mongodb and update the user
+
+  // open mongodb to save post and image path
   mongodb.open(function(err, db) {
     if (err) {
       return callback(err);
@@ -108,19 +97,33 @@ Post.prototype.saveImage = function(newImage, callback) {
         mongodb.close();
         return callback(err);
       }
-      collection.update({name: post.user,post: post.post}, post, function(err, results) {
-        mongodb.close();
+
+      // save the temp image to post directory
+      var date = new Date(post.time);
+      var imageName = post.user + date.valueOf().toString() + '.jpg';
+      console.log(date);
+      var imagePath = __dirname + "/../public/img/posts/" + imageName;
+      post.image = imageName;
+      fs.readFile(newImage, function(err, imageData) {
+        if (err) {
+          mongodb.close();
+          return callback(err);
+        }
+        fs.writeFile(imagePath, imageData, 'binary', function(err) {
+          if (err) {
+            mongodb.close();
+            return callback(err);
+          }
+          console.log('new image saved for Post: ' + imageName);
+
+          collection.insert(post, function(err, results) {
+            mongodb.close();
+
+            return callback(err);
+          });
+        });
       });
+
     });
-  });
-  // save the image data
-  var imagePath = __dirname + "/../public/img/posts/" + this.user + this.time + '.jpg';
-  fs.writeFile(imagePath, newImage, 'binary', function(err) {
-    if (err) {
-      console.log(err);
-      return callback(err);
-    }
-    console.log('new image saved for ' + this.user + this.time);
-    return callback(err, user);
   });
 };

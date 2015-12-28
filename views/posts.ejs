@@ -7,7 +7,7 @@
     <p><small><%= post.time %></small></p>
     <p><%= post.post %></p>
     <% if (post.image) { %>
-    <img src="<%= post.image %>" height="200" width="200">
+    <img src="/img/posts/<%= post.image %>" height="200" width="200">
     <% } %>
   </div>
 <% if (index % 3 == 2) { %>
