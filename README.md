@@ -7,6 +7,7 @@ The basic setup is unchaged.
 
 ### additional features:
 - [x] chatroom
-- [ ] upload image for individual users
+- [x] upload image for individual users
+- [ ] choose to upload image for posts
 - [ ] redesign the web page
 - [ ] search/filter for post
