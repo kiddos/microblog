@@ -72,6 +72,7 @@ module.exports = function(app) {
     });
   });
 
+
   app.get('/reg', checkNotLogin);
   app.get('/reg', function(req, res) {
     res.render('reg', {
@@ -184,7 +185,17 @@ module.exports = function(app) {
   app.post('/post', function(req, res) {
     var currentUser = req.session.user;
     var post = new Post(currentUser.name, req.body.post);
-    post.save(function(err) {
+
+    if(post.image){
+      fs.readFile(imagePath,function(err,imageData){
+          if (err) 
+            console.log('fail to save image');
+      });
+    } else {
+      var imageDate = null;
+    }
+
+    post.save(function(imageData,err) {
       if (err) {
         req.flash('error', err);
         return res.redirect('/');
@@ -194,6 +205,7 @@ module.exports = function(app) {
     });
   });
 };
+
 
 function checkLogin(req, res, next) {
   if (!req.session.user) {

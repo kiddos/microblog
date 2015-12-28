@@ -6,6 +6,9 @@
     <h2><a href="/u/<%= post.user %>"><%= post.user %></a> 說</h2>
     <p><small><%= post.time %></small></p>
     <p><%= post.post %></p>
+    <% if (post.image) { %>
+    <img src="<%= post.image %>" height="200" width="200">
+    <% } %>
   </div>
 <% if (index % 3 == 2) { %>
     </div><!-- end row -->
