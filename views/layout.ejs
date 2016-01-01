@@ -1,67 +1,63 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+
 <html>
 <head>
   <title><%= title %> - Microblog</title>
-  <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
-  <link href="stylesheets/bootstrap-responsive.css" rel="stylesheet">
-  <script type="text/javascript" charset="utf-8" src="socket.io.js"></script>
-  <style type="text/css">
-    body {
-      padding-top: 60px;
-      padding-bottom: 40px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" charset="utf-8" src="/jquery.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/bootstrap.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/socket.io.js"></script>
 </head>
 <body>
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+  <div class="navbar navbar-inverse"
+    data-spy="affix" data-offset-top="0">
+    <div class="container-fluid">
+      <a href="/" class="navbar-brand">Microblog</a>
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+          data-target="#mainbar">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
-        </a>
-        <a class="brand" href="/">Microblog</a>
-        <div class="nav-collapse">
-          <ul class="nav">
-            <li class="active"><a href="/">首頁</a></li>
-            <% if (!user) { %>
-              <li><a href="/login">登入</a></li>
-              <li><a href="/reg">註冊</a></li>
-            <% } else { %>
-              <li><a href="/logout">登出</a></li>
-              <li><a href="/profile">profile</a></li>
-              <img src="<%= user.image %>" alt="user" style="width:30px;height:30px;display:inline">
-              <li><a id="current-user"><%= user.name %></a></li>
-            <% } %>
-          </ul>
-        </div>
+        </button>
       </div>
+    </div>
+    <div class="collapse navbar-collapse" id="mainbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <% if (!user) { %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/reg">Register</a></li>
+        <% } else { %>
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="/">chat</a></li>
+          <li><a href="/profile">Profile</a></li>
+          <img src="<%= user.image %>" alt="user" id="usericon">
+          <li><a id="current-user"><%= user.name %></a></li>
+        <% } %>
+      </ul>
     </div>
   </div>
 
-  <div id="container" class="container">
-    <% if (success) { %>
-      <div class="alert alert-success">
-        <%= success %>
+  <%- body %>
+
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 footer">
+        <hr />
+        <footer>
+          <p><a target="_blank">By Joseph, StoneLin 2012</a></p>
+        </footer>
       </div>
-    <% } %>
-    <% if (error) { %>
-      <div class="alert alert-error">
-        <%= error %>
-      </div>
-    <% } %>
-    <%- body %>
-    <hr />
-    <footer>
-      <p><a href="http://www.byvoid.com/" target="_blank">BYVoid</a> 2012</p>
-    </footer>
+    </div>
   </div>
 </body>
-<script src="/jquery.min.js"></script>
-<script src="/bootstrap.min.js"></script>
+
 <% if (user) { %>
-<script type="text/javascript" charset="utf-8" src="javascripts/chat.js"></script>
+<script type="text/javascript" charset="utf-8" src="/chat.js"></script>
 <% } %>
 </html>
+
