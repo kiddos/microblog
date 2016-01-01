@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var routes = require('./routes');
 var settings = require('./settings');
@@ -33,7 +34,15 @@ app.configure(function() {
       db: settings.db
     })
   }));
+  app.use(require('node-sass-middleware')({
+    src: path.join(__dirname, 'public/sass'),
+    dest: path.join(__dirname, 'public/css'),
+    indentedSyntax: true,
+    sourceMap: true
+  }));
   app.use(express.router(routes));
+  app.use(express.static(__dirname + '/public/javascripts'));
+  app.use(express.static(__dirname + '/public/css'));
   app.use(express.static(__dirname + '/public'));
   app.use(express.static(__dirname + '/node_modules/material-design-icons-iconfont/dist/'));
   app.use(express.static(__dirname + '/node_modules/socket.io-client/'));
