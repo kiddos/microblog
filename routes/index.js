@@ -18,7 +18,6 @@ module.exports = function(app) {
           title: '首頁',
           posts: posts,
           users: users,
-          layout: false
         });
       });
     });
