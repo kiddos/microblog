@@ -9,7 +9,7 @@ socket.on('connect', function(socket){
   console.log('connected');
 });
 
-socket.on('someone-say', function(data){
+socket.on('message', function(data){
   if (data.user !== user.innerHTML) {
     $('#chat').val($('#chat').val() + data.user + ": " + data.content);
   }

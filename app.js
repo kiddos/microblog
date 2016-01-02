@@ -13,7 +13,7 @@ io.on('connection', function(socket) {
   socket.on('say', function(data) {
     console.log(data.user);
     console.log(data.content);
-    socket.emit('someone-say', data);
+    io.sockets.emit('message', data);
   });
 });
 
