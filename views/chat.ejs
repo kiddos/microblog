@@ -1,11 +1,11 @@
-<div class="span12" style="margin-top: 100px;margin-bottom: 50px">
-  <div class="chat-box span7">
-    <textarea rows="20" class="span7" autocomplete="off" id="chat"></textarea>
-    <textarea rows="2" class="span6" autocomplete="off" id="type"></textarea>
+<div class="container">
+  <div class="row col-lg-10">
+    <textarea rows="20" class="col-lg-12" autocomplete="off" id="chat"></textarea>
+    <textarea rows="2" class="col-lg-12" autocomplete="off" id="type"></textarea>
     <input type="button" class="span1" value="send" id="send">
   </div>
 
-  <div class="active-user-list span3">
+  <div class="active-user-list col-lg-2">
   <% if(user) { %>
     <ul class="list">
     <% users.forEach(function(user, index) { %>
