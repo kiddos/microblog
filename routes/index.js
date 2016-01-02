@@ -23,12 +23,28 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/chat', checkLogin);
+  app.get('/chat', function(req, res) {
+    User.getAll(function(err, users) {
+      if (err) {
+        users = [];
+      }
+
+      res.render('chat', {
+        title: 'Chat',
+        users: users,
+      });
+    });
+  });
+
+  app.get('/profile', checkLogin);
   app.get('/profile', function(req, res) {
     res.render('profile', {
       title: 'profile',
     });
   });
 
+  app.post('/profile-upload', checkLogin);
   app.post('/profile-upload', function(req, res) {
     var name = req.session.user.name;
     console.log('user name: ' + req.session.user.name);
@@ -48,6 +64,7 @@ module.exports = function(app) {
     });
   });
 
+  app.post('/image-upload', checkLogin);
   app.post('/image-upload', function(req, res) {
     var name = req.session.user.name;
     var imagePath = req.files.image.path;
@@ -71,7 +88,6 @@ module.exports = function(app) {
       });
     });
   });
-
 
   app.get('/reg', checkNotLogin);
   app.get('/reg', function(req, res) {
