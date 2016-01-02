@@ -9,5 +9,6 @@ The basic setup is unchaged.
 - [x] chatroom
 - [x] upload image for individual users
 - [x] choose to upload image for posts
-- [ ] redesign the web page
+- [x] redesign the web page
+- [ ] add like button to post
 - [ ] search/filter for post
