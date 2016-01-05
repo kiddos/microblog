@@ -48,7 +48,7 @@ if (sendButton !== null) {
       // clear input window
       type.value = '';
       // append message to chat window
-      $('#chat').val($('#chat').val() + 'You: ' + content);
+      $('#chat').val($('#chat').val() + 'You: ' + content + '\n');
 
       console.log(user.innerHTML);
       console.log('sending data');
