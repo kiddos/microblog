@@ -1,28 +1,41 @@
-<div class="profile-container span12">
-  <div class="user span3">
+<div class="container">
+  <div class="col-lg-4 row">
     <% if (!user.image) { %>
-    <img src="/img/default/default.png" alt="user" class="span3">
+      <img src="/img/default/default.png" alt="user"
+        class="col-lg-12 col-xs-8 col-sm-8 col-md-10">
     <% } else { %>
-    <img src="<%= user.image %>" alt="user" class="span3">
+      <img src="<%= user.image %>" alt="user"
+        class="col-lg-12 col-xs-8 col-sm-8 col-md-10">
     <% } %>
 
     <h3><%= user.name %></h3>
-    <form action="/image-upload" method="post" accept-charset="utf-8" role="form" enctype='multipart/form-data'>
-      <input name="image" type="file" value="choose file">
-      <p><input type="submit" value="submit"></p>
+    <form action="/image-upload" method="post" accept-charset="utf-8"
+      role="form" enctype='multipart/form-data'>
+      <div class="form-group">
+        <input name="image" type="file" value="choose file"
+          class="btn btn-info">
+      </div>
+      <div class="form-group">
+        <p><input type="submit" value="submit" class="btn btn-info"></p>
+      </div>
     </form>
   </div>
-  <div class="profile span8">
-    <% if (!user.profile) { %>
-    <header>Profile desciption</header>
-    <form action="/profile-upload" method="post" accept-charset="utf-8" role="form">
-      <textarea name="profile" rows="20" class="span8"></textarea>
-      <p><input type="submit" value="submit"></p>
-    </form>
-    <% } else { %>
-    <div class="description">
-      <p style="border: solid black 2px"><%= user.profile %></p>
-    </div>
+
+  <div class="col-lg-8">
+    <% if (user.profile) { %>
+      <div class="well">
+        <h2>Profile desciption</h2>
+        <p><%= user.profile %></p>
+      </div>
     <% } %>
+    <form action="/profile-upload" method="post" accept-charset="utf-8" role="form">
+      <div class="form-group">
+        <textarea name="profile" rows="20" style="resize: none"
+          class="col-lg-12 col-xs-12 col-sm-12 col-md-12"></textarea>
+      </div>
+      <div class="form-group">
+        <p><input type="submit" value="submit" class="btn btn-info"></p>
+      </div>
+    </form>
   </div>
 </div>
