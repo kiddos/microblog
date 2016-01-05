@@ -9,9 +9,12 @@
 
   <div class="user-list col-lg-2 col-xs-12 col-sm-12 col-md-4">
   <% if(user) { %>
-    <ul class="list">
+    <ul class="list-group">
     <% users.forEach(function(user, index) { %>
-      <li><%= user.name %></li>
+    <li class="list-group-item">
+      <span class="badge">0</span>
+      <%= user.name %>
+    </li>
     <% }) %>
     </ul>
   <% } %>
