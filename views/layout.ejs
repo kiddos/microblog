@@ -14,8 +14,7 @@
   <script type="text/javascript" charset="utf-8" src="/socket.io.js"></script>
 </head>
 <body>
-  <div class="navbar navbar-inverse"
-    data-spy="affix" data-offset-top="0">
+  <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -61,8 +60,12 @@
             <% } %>
 
             <% if (title == user.name) { %>
-              <li><img src="<%= user.image %>" alt="user" id="usericon"></li>
-              <li class="active"><a href="/u/<%= user.name %>" id="current-user"><%= user.name %></a></li>
+              <li class="active">
+                <img src="<%= user.image %>" alt="user" id="usericon">
+              </li>
+              <li class="active">
+                <a href="/u/<%= user.name %>" id="current-user"><%= user.name %></a>
+              </li>
             <% } else { %>
               <li><img src="<%= user.image %>" alt="user" id="usericon"></li>
               <li><a href="/u/<%= user.name %>" id="current-user"><%= user.name %></a></li>
@@ -81,7 +84,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 footer">
-        <hr />
+        <br>
         <footer>
           <p><a target="_blank">By Joseph, StoneLin 2012</a></p>
         </footer>

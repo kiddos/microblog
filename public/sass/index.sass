@@ -22,15 +22,15 @@ html,
   position: relative
   top: 8px
 
-.affix
-  top: 0
-  width: 100%
+.container
+  padding-bottom: 60px
 
-.affix + .container
-  padding-top: 70px
-  padding-bottom: -70px
+.navbar + .container
+  padding-top: 60px
+  padding-bottom: 0px
 
 .footer
+  opacity: 0.66
   position: fixed
   bottom: 0%
   background-color: $theme-text-color
@@ -44,5 +44,7 @@ html,
 
 .text-center-vertical
   position: relative
-  top: 30%
+  top: 33%
 
+textarea
+  resize: none
