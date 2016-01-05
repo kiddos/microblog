@@ -15,7 +15,7 @@ module.exports = function(app) {
         }
 
         res.render('index', {
-          title: '首頁',
+          title: 'Home',
           posts: posts,
           users: users,
         });
@@ -40,7 +40,7 @@ module.exports = function(app) {
   app.get('/profile', checkLogin);
   app.get('/profile', function(req, res) {
     res.render('profile', {
-      title: 'profile',
+      title: 'Profile',
     });
   });
 
@@ -92,7 +92,7 @@ module.exports = function(app) {
   app.get('/reg', checkNotLogin);
   app.get('/reg', function(req, res) {
     res.render('reg', {
-      title: '用戶註冊',
+      title: 'Register',
     });
   });
 
@@ -146,7 +146,7 @@ module.exports = function(app) {
   app.get('/login', checkNotLogin);
   app.get('/login', function(req, res) {
     res.render('login', {
-      title: '用戶登入',
+      title: 'Login',
     });
   });
 
