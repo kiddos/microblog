@@ -1,11 +1,11 @@
 <div class="container">
-  <div class="row col-lg-10">
-    <textarea rows="20" class="col-lg-12" autocomplete="off" id="chat"></textarea>
-    <textarea rows="2" class="col-lg-12" autocomplete="off" id="type"></textarea>
-    <input type="button" class="span1" value="send" id="send">
+  <div class="row col-lg-10 col-xs-12 col-sm-12 col-md-8">
+    <textarea rows="20" class="col-lg-12 col-xs-12 col-sm-12 col-md-12" autocomplete="off" id="chat"></textarea>
+    <textarea rows="2" class="col-lg-12 col-xs-12 col-sm-12 col-md-12" autocomplete="off" id="type"></textarea>
+    <input type="button" class="btn btn-info" value="send" id="send">
   </div>
 
-  <div class="active-user-list col-lg-2">
+  <div class="col-lg-2 col-xs-12 col-sm-12 col-md-4">
   <% if(user) { %>
     <ul class="list">
     <% users.forEach(function(user, index) { %>
