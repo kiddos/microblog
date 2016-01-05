@@ -5,6 +5,9 @@
   <title><%= title %> - Microblog</title>
   <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/index.css">
+  <% if (title == 'Chat') { %>
+    <link rel="stylesheet" type="text/css" href="/chat.css">
+  <% } %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="text/javascript" charset="utf-8" src="/jquery.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="/bootstrap.min.js"></script>
@@ -25,16 +28,47 @@
       </div>
       <div class="collapse navbar-collapse" id="mainbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Home</a></li>
-          <% if (!user) { %>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/reg">Register</a></li>
+          <% if (title == 'Home') { %>
+            <li class="active"><a href="/">Home</a></li>
           <% } else { %>
+            <li><a href="/">Home</a></li>
+          <% } %>
+
+          <% if (!user) { %>
+            <% if (title == 'Login') { %>
+              <li class="active"><a href="/login">Login</a></li>
+            <% } else { %>
+              <li><a href="/login">Login</a></li>
+            <% } %>
+
+            <% if (title == 'Register') { %>
+              <li class="active"><a href="/reg">Register</a></li>
+            <% } else { %>
+              <li><a href="/reg">Register</a></li>
+            <% } %>
+          <% } else { %>
+
+            <% if (title == 'Chat') { %>
+              <li class="active"><a href="/chat">chat</a></li>
+            <% } else { %>
+              <li><a href="/chat">chat</a></li>
+            <% } %>
+
+            <% if (title == 'Profile') { %>
+              <li class="active"><a href="/profile">Profile</a></li>
+            <% } else { %>
+              <li><a href="/profile">Profile</a></li>
+            <% } %>
+
+            <% if (title == user.name) { %>
+              <li><img src="<%= user.image %>" alt="user" id="usericon"></li>
+              <li class="active"><a href="/u/<%= user.name %>"><%= user.name %></a></li>
+            <% } else { %>
+              <li><img src="<%= user.image %>" alt="user" id="usericon"></li>
+              <li><a href="/u/<%= user.name %>"><%= user.name %></a></li>
+            <% } %>
+
             <li><a href="/logout">Logout</a></li>
-            <li><a href="/chat">chat</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <img src="<%= user.image %>" alt="user" id="usericon">
-            <li><a id="current-user"><%= user.name %></a></li>
           <% } %>
         </ul>
       </div>
