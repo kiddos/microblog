@@ -1,5 +1,18 @@
-<form method="post" action="/post" class="well form-inline center" style="text-align:center;" enctype='multipart/form-data'>
-  <input type="text" class="span8" name="post">
-  <input name="image" type="file" value="choose file">
-  <button type="submit" class="btn btn-success"><i class="icon-comment icon-white"></i> 發言</button>
-</form>
+<div class="container">
+  <form method="post" action="/post" class="well form-horizontal"
+    enctype='multipart/form-data'>
+    <div class="form-group">
+      <label for="post">Post</label>
+      <textarea name="post" rows="6" class="form-control col-lg-9"></textarea>
+    </div>
+    <div class="form-group">
+      <input name="image" type="file" value="choose file"
+        class="form-control col-lg-3">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">
+        <i class="icon-comment icon-white"></i> 發言
+      </button>
+    </div>
+  </form>
+</div>

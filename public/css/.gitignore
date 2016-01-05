@@ -1,0 +1,3 @@
+#ignore css and map files which will be auto generate
+*.map
+*.css

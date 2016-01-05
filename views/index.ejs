@@ -1,14 +1,34 @@
-<% if (!user) { %>
-  <div class="hero-unit">
-    <h1>歡迎來到 Microblog</h1>
-    <p>Microblog 是一個基於 Node.js 的微博系統。</p>
-    <p>
-      <a class="btn btn-primary btn-large" href="/login">登錄</a>
-      <a class="btn btn-large" href="/reg">立即註冊</a>
-    </p>
-  </div>
-<% } else { %>
-  <%- partial('say') %>
-  <%- partial('posts') %>
-  <%- partial('chat') %>
+<div class="container main">
+  <% if (success) { %>
+    <div class="alert alert-success fade in">
+      <a href="#" class="close" data-dismiss="alert"
+        aria-label="close">&times;</a>
+      <%= success %>
+    </div>
+  <% } %>
+  <% if (error) { %>
+    <div class="alert alert-error fade in">
+      <a href="#" class="close" data-dismiss="alert"
+        aria-label="close">&times;</a>
+      <%= error %>
+    </div>
+  <% } %>
+
+  <% if (!user) { %>
+    <div class="text-center text-center-vertical">
+      <h1>歡迎來到 Microblog</h1>
+      <p>Microblog 是一個基於 Node.js 的微博系統。</p>
+      <p>
+        <a class="btn btn-primary btn-large" href="/login">登錄</a>
+        <a class="btn btn-large" href="/reg">立即註冊</a>
+      </p>
+    </div>
+  <% } else { %>
+    <%- partial('say') %>
+    <%- partial('posts') %>
+  <% } %>
+</div>
+<% if (user) { %>
+<script type="text/javascript" charset="utf-8" src="/chat.js"></script>
 <% } %>
+

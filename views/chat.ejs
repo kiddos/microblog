@@ -1,15 +1,20 @@
-<div class="span12" style="margin-top: 100px;margin-bottom: 50px">
-  <div class="chat-box span7">
-    <textarea rows="20" class="span7" autocomplete="off" id="chat"></textarea>
-    <textarea rows="2" class="span6" autocomplete="off" id="type"></textarea>
-    <input type="button" class="span1" value="send" id="send">
+<div class="container">
+  <div class="row col-lg-10 col-xs-12 col-sm-12 col-md-8">
+    <textarea rows="20" class="main col-lg-12 col-xs-12 col-sm-12 col-md-12"
+      autocomplete="off" id="chat" readonly></textarea>
+    <textarea rows="2" class="entry col-lg-12 col-xs-12 col-sm-12 col-md-12"
+      autocomplete="off" id="type"></textarea>
+    <button type="button" class="btn btn-info" id="send">send</button>
   </div>
 
-  <div class="active-user-list span3">
+  <div class="user-list col-lg-2 col-xs-12 col-sm-12 col-md-4">
   <% if(user) { %>
-    <ul class="list">
+    <ul class="list-group">
     <% users.forEach(function(user, index) { %>
-      <li><%= user.name %></li>
+    <li class="list-group-item">
+      <span class="badge">0</span>
+      <%= user.name %>
+    </li>
     <% }) %>
     </ul>
   <% } %>

@@ -15,20 +15,36 @@ module.exports = function(app) {
         }
 
         res.render('index', {
-          title: '首頁',
+          title: 'Home',
           posts: posts,
-          users: users
+          users: users,
         });
       });
     });
   });
 
-  app.get('/profile', function(req, res) {
-    res.render('profile', {
-      title: 'profile',
+  app.get('/chat', checkLogin);
+  app.get('/chat', function(req, res) {
+    User.getAll(function(err, users) {
+      if (err) {
+        users = [];
+      }
+
+      res.render('chat', {
+        title: 'Chat',
+        users: users,
+      });
     });
   });
 
+  app.get('/profile', checkLogin);
+  app.get('/profile', function(req, res) {
+    res.render('profile', {
+      title: 'Profile',
+    });
+  });
+
+  app.post('/profile-upload', checkLogin);
   app.post('/profile-upload', function(req, res) {
     var name = req.session.user.name;
     console.log('user name: ' + req.session.user.name);
@@ -48,6 +64,7 @@ module.exports = function(app) {
     });
   });
 
+  app.post('/image-upload', checkLogin);
   app.post('/image-upload', function(req, res) {
     var name = req.session.user.name;
     var imagePath = req.files.image.path;
@@ -72,11 +89,10 @@ module.exports = function(app) {
     });
   });
 
-
   app.get('/reg', checkNotLogin);
   app.get('/reg', function(req, res) {
     res.render('reg', {
-      title: '用戶註冊',
+      title: 'Register',
     });
   });
 
@@ -130,7 +146,7 @@ module.exports = function(app) {
   app.get('/login', checkNotLogin);
   app.get('/login', function(req, res) {
     res.render('login', {
-      title: '用戶登入',
+      title: 'Login',
     });
   });
 
