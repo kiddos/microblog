@@ -50,8 +50,8 @@ if (sendButton !== null) {
       // append message to chat window
       $('#chat').val($('#chat').val() + 'You: ' + content + '\n');
 
-      console.log(user.innerHTML);
-      console.log('sending data');
+      //console.log(user.innerHTML);
+      //console.log('sending data');
     }
   };
 }
