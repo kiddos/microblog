@@ -62,10 +62,10 @@
 
             <% if (title == user.name) { %>
               <li><img src="<%= user.image %>" alt="user" id="usericon"></li>
-              <li class="active"><a href="/u/<%= user.name %>"><%= user.name %></a></li>
+              <li class="active"><a href="/u/<%= user.name %>" id="current-user"><%= user.name %></a></li>
             <% } else { %>
               <li><img src="<%= user.image %>" alt="user" id="usericon"></li>
-              <li><a href="/u/<%= user.name %>"><%= user.name %></a></li>
+              <li><a href="/u/<%= user.name %>" id="current-user"><%= user.name %></a></li>
             <% } %>
 
             <li><a href="/logout">Logout</a></li>
