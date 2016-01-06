@@ -200,7 +200,7 @@ module.exports = function(app) {
   app.post('/post', checkLogin);
   app.post('/post', function(req, res) {
     var currentUser = req.session.user;
-    var post = new Post(currentUser.name, req.body.post, null, null);
+    var post = new Post(currentUser.name, req.body.post, null, null, 0);
 
     var image = req.files.image.path;
     // need to check like this

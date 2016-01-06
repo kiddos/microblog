@@ -5,6 +5,7 @@
   <title><%= title %> - Microblog</title>
   <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/index.css">
+  <link rel="stylesheet" type="text/css" href="/material-design-icons.css">
   <% if (title == 'Chat') { %>
     <link rel="stylesheet" type="text/css" href="/chat.css">
   <% } %>
@@ -93,8 +94,10 @@
   </div>
 </body>
 
-<% if (user) { %>
-<script type="text/javascript" charset="utf-8" src="/chat.js"></script>
+<% if (title == 'Chat') { %>
+  <script type="text/javascript" charset="utf-8" src="/chat.js"></script>
+<% } else if (title == user.name || title == 'Home'){ %>
+  <script type="text/javascript" charset="utf-8" src="/post.js"></script>
 <% } %>
 </html>
 
