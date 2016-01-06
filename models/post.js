@@ -164,7 +164,6 @@ Post.prototype.updateLikeCount = function(callback) {
         post: newPost.post
       }, newPost, function(err, results) {
         mongodb.close();
-        console.log(results);
         return callback(err);
       });
     });
