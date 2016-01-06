@@ -2,18 +2,38 @@ var path = require('path');
 var express = require('express');
 var routes = require('./routes');
 var settings = require('./settings');
+var Post = require('./models/post.js');
 var MongoStore = require('connect-mongo')(express);
 var app = module.exports = express.createServer();
 var io = require('socket.io')(app);
 
+// instant communication with socket io
 io.on('connection', function(socket) {
   console.log('connection establish');
   console.log('socket: ' + socket.request.connection.remoteAddress);
 
+  // chatroom people saying
   socket.on('say', function(data) {
     console.log(data.user);
     console.log(data.content);
     io.sockets.emit('message', data);
+  });
+
+  // post update like count
+  socket.on('addlike', function(data) {
+    var post = new Post(data.username,
+                        data.post,
+                        data.image,
+                        data.time,
+                        data.like);
+
+    post.updateLikeCount(function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('like added');
+      }
+    });
   });
 });
 
