@@ -76,7 +76,7 @@ Post.get = function get(username, callback) {
         // 封裝 posts 爲 Post 對象
         var posts = [];
         docs.forEach(function(doc, index) {
-          var post = new Post(doc.user, doc.post, doc.image, doc.time);
+          var post = new Post(doc.user, doc.post, doc.image, doc.time, doc.like);
           posts.push(post);
         });
         callback(null, posts);
