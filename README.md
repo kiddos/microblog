@@ -10,5 +10,5 @@ The basic setup is unchaged.
 - [x] upload image for individual users
 - [x] choose to upload image for posts
 - [x] redesign the web page
-- [ ] add like button to post
+- [x] add like button to post
 - [ ] search/filter for post
