@@ -96,7 +96,7 @@
 
 <% if (title == 'Chat') { %>
   <script type="text/javascript" charset="utf-8" src="/chat.js"></script>
-<% } else if (title == user.name || title == 'Home'){ %>
+<% } else if ((user && title == user.name ) || title == 'Home'){ %>
   <script type="text/javascript" charset="utf-8" src="/post.js"></script>
 <% } %>
 </html>
